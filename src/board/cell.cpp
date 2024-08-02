@@ -17,7 +17,7 @@ void Cell::update() {
     }
 }
 
-void Cell::draw() {
+void Cell::draw() const{
     if (obstacle) {
         obstacle->draw(); // Dessiner l'obstacle
     }

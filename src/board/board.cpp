@@ -53,3 +53,7 @@ int Board::getLevel() const {
 int Board::getLives() const {
     return lives;
 }
+
+const std::vector<Line>& Board::getLines() const {
+    return lines;
+}

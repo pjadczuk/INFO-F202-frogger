@@ -1,5 +1,7 @@
 #pragma once
 #include "../obstacles/obstacle.hpp"
+#include "../obstacles/car.hpp"
+#include "../obstacles/truck.hpp"
 
 class Cell {
 private:
@@ -10,6 +12,6 @@ public:
     ~Cell();
     void setObstacle(Obstacle* obs);
     void update();
-    void draw();
+    void draw() const; // Marquer la méthode comme const
     Obstacle* getObstacle() const;
 };

@@ -21,4 +21,6 @@ public:
     int getScore() const;
     int getLevel() const;
     int getLives() const;
+    const std::vector<Line>& getLines() const; // Ajout de la méthode getLines
 };
+

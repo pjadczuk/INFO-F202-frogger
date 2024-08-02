@@ -6,6 +6,7 @@
 #include "../point.hpp"
 #include "../frog.hpp"
 
+
 class Obstacle {
 protected:
     Point position;

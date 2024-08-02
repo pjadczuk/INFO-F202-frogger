@@ -1,4 +1,4 @@
-#include "../include/displayBoard.hpp"
+#include "../../include/board/displayBoard.hpp"
 #include <FL/fl_draw.H>
 #include <string>
 
@@ -8,9 +8,13 @@ void DisplayBoard::draw() {
     // Dessiner la grenouille
     board->getFrog().draw();
 
-    // Dessiner les obstacles
-    for (const auto& obstacle : board->getObstacles()) {
-        obstacle->draw();
+    // Dessiner les obstacles via les lignes
+    for (const auto& line : board->getLines()) {
+        for (const auto& cell : line.getCells()) {
+            if (cell.getObstacle() != nullptr) {
+                cell.getObstacle()->draw();
+            }
+        }
     }
 
     // Dessiner d'autres éléments comme le score, les vies, etc.

@@ -1,7 +1,7 @@
 #pragma once
 #include <FL/Fl_Window.H>
-#include "board.hpp"
-#include "displayBoard.hpp"
+#include "board/board.hpp"
+#include "board/displayBoard.hpp"
 
 class MainWindow : public Fl_Window {
 private:
@@ -10,5 +10,6 @@ private:
 
 public:
     MainWindow(int width, int height, const char* title);
-    void draw() override;
+    void draw() override;	
+
 };

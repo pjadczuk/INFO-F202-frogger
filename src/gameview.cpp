@@ -6,7 +6,6 @@ GameView::GameView(Game* game) : game(game) {}
 void GameView::render() {
     // Dessiner la grenouille et le niveau actuel
     game->getFrog().draw();
-    game->getCurrentLevel().draw();
 }
 
 void GameView::showVictoryMessage() {

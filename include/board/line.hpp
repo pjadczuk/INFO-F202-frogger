@@ -2,6 +2,7 @@
 #include <vector>
 #include "cell.hpp"
 
+
 class Line {
 private:
     bool walkable; // Peut-on marcher sur cette ligne ?
