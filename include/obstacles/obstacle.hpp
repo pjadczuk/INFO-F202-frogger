@@ -22,3 +22,4 @@ public:
 };
 
 #endif // OBSTACLE_HPP
+

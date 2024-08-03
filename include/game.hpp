@@ -1,7 +1,6 @@
 #pragma once
 
 #include "frog.hpp"
-#include <vector>
 
 class AbstractView;
 class AbstractController;

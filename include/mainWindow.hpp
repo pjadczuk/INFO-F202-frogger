@@ -1,15 +1,17 @@
 #pragma once
 #include <FL/Fl_Window.H>
 #include "board/board.hpp"
-#include "board/displayBoard.hpp"
+
 
 class MainWindow : public Fl_Window {
 private:
     Board board;
-    DisplayBoard displayBoard;
 
 public:
     MainWindow(int width, int height, const char* title);
-    void draw() override;	
-
+    void drawStaticElements();   // Dessiner les éléments statiques
+    void drawDynamicElements();  // Dessiner les éléments dynamiques
+    void draw() override;
+    int handle(int event) override;
+    static void Timer_CB(void *userdata);
 };

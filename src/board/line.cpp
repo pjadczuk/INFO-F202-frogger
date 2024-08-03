@@ -1,33 +1,55 @@
 #include "../../include/board/line.hpp"
+#include <iostream>
 
-Line::Line(bool walkable, int numCells) : walkable(walkable) {
+Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight,  int numCells)
+    : walkable(type != WATER), type(type) {
+    // Créer les cellules de la ligne
     for (int i = 0; i < numCells; ++i) {
-        cells.emplace_back(); // Ajouter des cellules à la ligne
+        Point center = {cellWidth * i + cellWidth / 2, cellHeight * (13-numerLine) + cellHeight / 2}; // Positionnement des cellules
+        cells.emplace_back(center, cellWidth, cellHeight, cellColor, walkable);
     }
+}
+
+Line::~Line() {
+    // Libérer les obstacles
+    for (auto& obstacle : obstacles) {
+        delete obstacle;
+    }
+    obstacles.clear();
 }
 
 bool Line::isWalkable() const {
     return walkable;
 }
 
-void Line::update() {
+Line::LineType Line::getType() const {
+    return type;
+}
+
+void Line::addObstacle(Obstacle* obstacle) {
+    if (type != SIDEWALK) { // On ne peut ajouter des obstacles que sur les routes et rivières
+        obstacles.push_back(obstacle);
+    }
+}
+
+void Line::drawBackground() {
+    // Dessiner les cellules de la ligne (statique)
     for (auto& cell : cells) {
-        cell.update(); // Mettre à jour chaque cellule
+        cell.draw();
     }
 }
 
-void Line::draw() const{
-    for (const auto& cell : cells) {
-        cell.draw(); // Dessiner chaque cellule
-    }
-}
-
-void Line::addObstacle(int cellIndex, Obstacle* obstacle) {
-    if (cellIndex >= 0 && cellIndex < cells.size()) {
-        cells[cellIndex].setObstacle(obstacle);
+void Line::drawObstacles() const {
+    // Dessiner les obstacles (dynamique)
+    for (const auto& obstacle : obstacles) {
+        obstacle->draw();
     }
 }
 
 const std::vector<Cell>& Line::getCells() const {
     return cells;
+}
+
+const std::vector<Obstacle*>& Line::getObstacles() const {
+    return obstacles;
 }

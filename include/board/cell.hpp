@@ -1,17 +1,17 @@
 #pragma once
-#include "../obstacles/obstacle.hpp"
-#include "../obstacles/car.hpp"
-#include "../obstacles/truck.hpp"
+#include <FL/Fl.H>
+#include <FL/Fl_Box.H>
+#include <FL/fl_draw.H>
+#include "../point.hpp"
 
 class Cell {
 private:
-    Obstacle* obstacle; // Obstacle dans la cellule, s'il y en a un
+    int w,h;
+    Fl_Color fillColor;
+    bool walkable;
+    Point center;
 
 public:
-    Cell();
-    ~Cell();
-    void setObstacle(Obstacle* obs);
-    void update();
-    void draw() const; // Marquer la méthode comme const
-    Obstacle* getObstacle() const;
+    Cell(Point center, int w, int h, Fl_Color fillColor, bool Walkable);
+    void draw(); // Marquer la méthode comme const
 };

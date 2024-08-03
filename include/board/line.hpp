@@ -1,18 +1,32 @@
 #pragma once
 #include <vector>
 #include "cell.hpp"
+#include "../obstacles/obstacle.hpp"
 
 
 class Line {
+public:
+    enum LineType {
+        ROAD,
+        WATER,
+        SIDEWALK
+    };
+
 private:
-    bool walkable; // Peut-on marcher sur cette ligne ?
-    std::vector<Cell> cells; // Les cellules de cette ligne
+    std::vector<Cell> cells;      // Contient les cellules de la ligne
+    std::vector<Obstacle*> obstacles; // Contient les obstacles sur la ligne
+    bool walkable;                // Indique si la ligne est marchable
+    LineType type;                // Type de la ligne
 
 public:
-    Line(bool walkable, int numCells);
+    Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight , int numCells = 14);
+    ~Line();
+
     bool isWalkable() const;
-    void update();
-    void draw() const;
-    void addObstacle(int cellIndex, Obstacle* obstacle);
+    LineType getType() const;
+    void addObstacle(Obstacle* obstacle);
+    void drawBackground(); // Dessiner le fond (statique)
+    void drawObstacles() const;  // Dessiner les obstacles (dynamique)
     const std::vector<Cell>& getCells() const;
+    const std::vector<Obstacle*>& getObstacles() const;
 };

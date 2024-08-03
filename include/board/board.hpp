@@ -1,26 +1,22 @@
 #pragma once
 #include <vector>
 #include "line.hpp"
-#include "../frog.hpp"
+
 
 class Board {
 private:
     std::vector<Line> lines; // Les lignes du plateau
-    Frog frog;
     int score;
-    int level;
-    int lives;
-
+    int windowWidth;
+    int windowHeight;
+    void initialize();
 public:
-    Board();
-    void loadLevel(int newLevel);
+    Board(int windowWidth, int windowHeight);
     void update();
     void draw();
+    void drawObstacles();
     void reset();
-    Frog& getFrog();
     int getScore() const;
-    int getLevel() const;
-    int getLives() const;
     const std::vector<Line>& getLines() const; // Ajout de la méthode getLines
 };
 

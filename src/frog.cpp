@@ -1,7 +1,5 @@
 #include "../include/frog.hpp"
 
-Frog::Frog(Point startPos, int initLives)
-    : position(startPos), lives(initLives), direction(Direction::Up), speed(5) {}
 
 void Frog::move(Direction dir) {
     direction = dir;

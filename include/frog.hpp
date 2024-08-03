@@ -15,7 +15,8 @@ private:
     int speed;
 
 public:
-    Frog(Point startPos, int initLives);
+    Frog(Point startPos = Point(250, 450), int initLives = 3)
+        : position(startPos), lives(initLives){}
     void move(Direction dir);
     void loseLife();
     void resetPosition(Point startPos);
