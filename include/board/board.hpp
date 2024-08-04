@@ -3,6 +3,8 @@
 #include "line.hpp"
 #include "../obstacles/car.hpp"
 #include "../obstacles/truck.hpp"
+#include "../obstacles/log.hpp"
+#include "../obstacles/turtle.hpp"
 #include "../frog.hpp"
 
 class Board {
@@ -27,5 +29,6 @@ public:
     void moveFrogDown();
     void moveFrogLeft();
     void moveFrogRight();
+    void toggleTurtleWalkable();
 };
 

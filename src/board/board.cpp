@@ -47,7 +47,33 @@ void Board::addObstaclesToLines(){
     for (int i = 1; i < 4; i++) lines[4].addObstacle(new Car(Point{i * 200,lines[4].getHeight()* (8) }, lines[4].getWidth(), lines[1].getHeight(), 2));
     for (int i = 1; i <3; i++) lines[5].addObstacle(new Truck(Point{i * 300,lines[5].getHeight()* (7) }, lines[5].getWidth()*2, lines[1].getHeight(), -1));
    
+    for (int i = 0; i < 4; i++) lines[7].addObstacle(new Turtle(Point{i * 300,lines[1].getHeight()* (5) }, lines[7].getWidth()*3, lines[1].getHeight(), -1));
+    for (int i = 0; i < 3; i++) lines[8].addObstacle(new Log(Point{i * 300,lines[8].getHeight()* (4) }, lines[8].getWidth()*2, lines[1].getHeight(), 2));
+    for (int i = 0; i < 3; i++) lines[9].addObstacle(new Log(Point{i * 400,lines[9].getHeight()* (3) }, lines[9].getWidth()*4, lines[1].getHeight(), 3));
+    for (int i = 1; i < 4; i++) lines[10].addObstacle(new Turtle(Point{i * 300,lines[10].getHeight()* (2) }, lines[10].getWidth()*3, lines[1].getHeight(), -2));
+    for (int i = 1; i <5; i++) lines[11].addObstacle(new Log(Point{i * 300,lines[11].getHeight()* (1) }, lines[11].getWidth()*3, lines[1].getHeight(), 2));
 }
+
+void Board::toggleTurtleWalkable() {
+    // Vérifier si la ligne 7 contient au moins une tortue
+    if (!lines[7].getObstacles().empty()) {
+        // La dernière tortue de la ligne 7
+        auto* turtle = dynamic_cast<Turtle*>(lines[7].getObstacles().back());
+        if (turtle) {
+            turtle->setWalkable();
+        }
+    }
+    
+    // Vérifier si la ligne 10 contient au moins une tortue
+    if (!lines[10].getObstacles().empty()) {
+        // La première tortue de la ligne 10
+        auto* turtle = dynamic_cast<Turtle*>(lines[10].getObstacles().front());
+        if (turtle) {
+            turtle->setWalkable();
+        }
+    }
+}
+
 
 // Méthodes de mouvement de la grenouille
 void Board::moveFrogUp() {

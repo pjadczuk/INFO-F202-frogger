@@ -15,4 +15,5 @@ public:
     void draw() override;
     int handle(int event) override;
     static void Timer_CB(void *userdata);
+    static void toggleTurtles_CB(void* userdata);
 };

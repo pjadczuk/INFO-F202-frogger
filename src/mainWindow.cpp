@@ -9,6 +9,7 @@ MainWindow::MainWindow(int width, int height, const char* title)
       inputHandler(&board){
     // Commencer la boucle de rafraîchissement des éléments dynamiques
     Fl::add_timeout(1.0 / 60, Timer_CB, this);  // 60 fps
+    Fl::add_timeout(1.0, toggleTurtles_CB, this);  // Appeler toggleTurtles_CB toutes les secondes
 }
 
 // Dessiner les éléments statiques (appelé une seule fois)
@@ -46,6 +47,12 @@ void MainWindow::Timer_CB(void *userdata) {
     MainWindow *o = static_cast<MainWindow *>(userdata);
     o->redraw();  // Appeler le dessin des éléments dynamiques
     Fl::repeat_timeout(1.0 / 60, Timer_CB, userdata);  // Répéter toutes les 1/60 secondes
+}
+
+void MainWindow::toggleTurtles_CB(void* userdata) {
+    MainWindow* o = static_cast<MainWindow*>(userdata);
+    o->board.toggleTurtleWalkable();  // Changer l'état des tortues
+    Fl::repeat_timeout(1.0, toggleTurtles_CB, userdata);  // Répéter toutes les secondes
 }
 
 void MainWindow::draw() {
