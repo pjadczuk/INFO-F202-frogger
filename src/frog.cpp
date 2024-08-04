@@ -3,9 +3,12 @@
 #include "../include/frog.hpp"
 #include <FL/Enumerations.H>
 #include <array>
+#include <iostream>
 
 Frog::Frog(Point initCenter, int w, int h, Fl_Color bodyCol)
-    : center(initCenter), width(w), height(h), bodyColor(bodyCol), direction(0), onObstacle(false), obstacleMountable(false) {}
+    : center(initCenter), width(w), height(h), bodyColor(bodyCol), direction(0), onObstacle(false), obstacleMountable(false), posH(posH = 1) {
+        setInitCenter(initCenter);
+    }
 
 void Frog::draw() const {
     // Dessiner le corps de la grenouille (rectangle)
@@ -74,6 +77,19 @@ int Frog::getWidth() {
     return width;
 }
 
+int Frog::getPosHeight() {
+    return posH;
+}
+void Frog::setInitCenter(Point initCenter) {
+    initialCenter = initCenter;
+
+}
+void Frog::resetToInitialCenter() {
+    center = initialCenter;
+    posH = 1;
+    setDirection(0);
+}
+
 void Frog::move(int dx, int dy) {
     center.x += dx;
     center.y += dy;
@@ -85,15 +101,4 @@ void Frog::setDirection(int dir) {
     }
 }
 
-void Frog::checkCollision(Obstacle* obstacle) {
-    if (obstacle && obstacle->contains(center)) {
-        onObstacle = true;
-        obstacleMountable = obstacle->isMountable();
-        if (obstacleMountable) {
-            move(obstacle->getSpeed()); // Déplacement avec l'obstacle
-        }
-    } else {
-        onObstacle = false;
-        obstacleMountable = false;
-    }
-}
+

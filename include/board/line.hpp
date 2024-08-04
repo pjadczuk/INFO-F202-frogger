@@ -9,7 +9,8 @@ public:
     enum LineType {
         ROAD,
         WATER,
-        SIDEWALK
+        SIDEWALK,
+        FINISH
     };
 
 private:
@@ -19,6 +20,7 @@ private:
     LineType type;                // Type de la ligne
     int cellHeight;
     int cellWidth;
+    int numerLine;
 
 public:
     Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight , int numCells = 14);
@@ -29,8 +31,10 @@ public:
     void addObstacle(Obstacle* obstacle);
     void drawBackground(); // Dessiner le fond (statique)
     void drawObstacles() const;  // Dessiner les obstacles (dynamique)
-    const std::vector<Cell>& getCells() const;
+    std::vector<Cell>& getCells();
     const std::vector<Obstacle*>& getObstacles() const;
     int getWidth();
     int getHeight();
+    int getNumerLine();
+    void switchWalkableCell(int cellIndex);
 };

@@ -17,5 +17,5 @@ void Obstacle::move() {
 }
 
 int Obstacle::getSpeed() {
-    
+    return speed;
 }

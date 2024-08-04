@@ -14,13 +14,14 @@ MainWindow::MainWindow(int width, int height, const char* title)
 
 // Dessiner les éléments statiques (appelé une seule fois)
 void MainWindow::drawStaticElements() {
-    board.draw();  // Dessiner le plateau statique (lignes)
+    board.drawBackground();  // Dessiner le plateau statique (lignes)
 }
 
 // Dessiner les éléments dynamiques (appelé fréquemment)
 void MainWindow::drawDynamicElements() {
     board.update();            // Mettre à jour l'état des éléments dynamiques
     board.drawObstacles();     // Dessiner les obstacles en mouvement
+    board.drawFrog();
     // Ici, vous pourriez également dessiner d'autres éléments dynamiques comme la grenouille
 }
 

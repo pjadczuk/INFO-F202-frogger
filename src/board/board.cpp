@@ -1,4 +1,5 @@
 #include "../../include/board/board.hpp"
+#include <iostream>
 
 Board::Board(int windowWidth, int windowHeight)
     : windowWidth(windowWidth), windowHeight(windowHeight), 
@@ -10,6 +11,24 @@ Board::Board(int windowWidth, int windowHeight)
 Frog& Board::getFrog() {
     return frog;
 }
+
+void Board::setupFinishLinePairs() {
+    // Indices des paires de cellules walkables sur la ligne de FINISH
+    std::vector<std::pair<int, int>> walkablePairs = {{0, 1}, {4, 5}, {8, 9}, {12, 13}};
+
+    // Récupérer la ligne de FINISH
+    Line& finishLine = lines.back();
+
+    // Définir les cellules comme walkables par paires
+    for (const auto& pair : walkablePairs) {
+        int index1 = pair.first;
+        int index2 = pair.second;
+
+        finishLine.switchWalkableCell(index1);
+        finishLine.switchWalkableCell(index2);
+    }
+}
+
 void Board::initialize() {
     lines.clear(); // Effacer les anciennes lignes, s'il y en a
 
@@ -33,8 +52,11 @@ void Board::initialize() {
     }
 
     // Ligne 13 : Trottoir (Arrivée)
-    lines.emplace_back(Line::SIDEWALK, 13, FL_MAGENTA, cellWidth, cellHeight);
-
+    lines.emplace_back(Line::FINISH, 13, FL_MAGENTA, cellWidth, cellHeight);
+    std::vector<int> WalkableCells = {0, 1, 4, 5,8,9,12,13};
+    for (int index : WalkableCells) {
+        lines.back().switchWalkableCell(index);
+    }
     addObstaclesToLines();
     // Initialiser le score
     score = 0;
@@ -78,12 +100,16 @@ void Board::toggleTurtleWalkable() {
 // Méthodes de mouvement de la grenouille
 void Board::moveFrogUp() {
     frog.setDirection(0);
+    frog.incrementPosHeight();
     frog.move(0, -1 * windowHeight/14);
+
 }
 
 void Board::moveFrogDown() {
     frog.setDirection(2);
+    frog.decrementPosHeight();
     frog.move(0, windowHeight/14);
+
 }
 
 void Board::moveFrogLeft() {
@@ -99,32 +125,78 @@ void Board::moveFrogRight() {
 
 
 void Board::update() {
-    // Mettre à jour les obstacles sur chaque ligne
     for (auto& line : lines) {
-        // Mettre à jour les obstacles sur les lignes qui en contiennent
-        if (line.getType() != Line::SIDEWALK) {
+        if (frog.getPosHeight() == line.getNumerLine()) {
+            checkFrogOnLine(line);
+        } else {
+            // Déplacer les obstacles même si la grenouille n'est pas sur la ligne
             for (auto* obstacle : line.getObstacles()) {
-                obstacle->move(); // Déplacer les obstacles
+                obstacle->move();
             }
         }
     }
 
-    // Mettre à jour d'autres éléments du jeu si nécessaire
-    // (par exemple, vérifier les collisions, mettre à jour le score)
+    // Autres mises à jour du jeu si nécessaire (ex. mettre à jour le score)
+}
+
+void Board::checkFrogOnLine(Line& line) {
+    bool frogOnValidObstacle = false;
+
+    for (auto* obstacle : line.getObstacles()) {
+        obstacle->move(); // Déplacer les obstacles
+
+        if (obstacle->contains(frog.getCenter())) {
+            if (line.isWalkable()) {
+                frog.resetToInitialCenter();
+                return; // Si c'est une ligne marchable et qu'il y a collision, réinitialiser la grenouille
+            } else if (obstacle->isMountable()) {
+                frog.move(obstacle->getSpeed());
+                frogOnValidObstacle = true; // Grenouille sur un obstacle montable
+            }
+        }
+    }
+
+    // Si après avoir vérifié tous les obstacles, la grenouille n'est pas sur un obstacle montable
+    if (!frogOnValidObstacle && !line.isWalkable()) {
+        frog.resetToInitialCenter(); // Réinitialiser la grenouille si elle n'est pas sur un obstacle montable
+    }
+}
+
+bool Board::isFrogOnFinishCell() {
+    // Trouver la ligne FINISH
+    for (auto& line : lines) {
+        if (line.getType() == Line::FINISH) {
+            // Vérifier si le Frog est sur une cellule walkable de cette ligne
+            for (auto& cell : line.getCells()) {
+                if (cell.isWalkable() && cell.contains(frog.getCenter())) {
+                    cell.setWalkable(false);
+                    return true; // Le Frog est sur une cellule walkable
+                }
+            }
+        }
+    }
+    return false; // Le Frog n'est pas sur une cellule walkable
 }
 
 // Dessiner le plateau de jeu
-void Board::draw() {
+void Board::drawBackground() {
     // Dessiner les lignes (fond statique)
     for (auto& line : lines) {
         line.drawBackground();
     }
-    frog.draw();
+    
 }
+
 void Board::drawObstacles() {
     for (auto& line : lines) {
         line.drawObstacles();
     }
+}
+void Board::drawFrog() {
+    frog.draw();
+}
+void Board::draw() {
+    //drawBackground();drawObstacles();drawFrog();
 }
 // Réinitialiser l'état du jeu
 void Board::reset() {

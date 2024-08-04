@@ -19,8 +19,10 @@ private:
 public:
     Board(int windowWidth, int windowHeight);
     void update();
-    void draw();
+    void drawBackground();
     void drawObstacles();
+    void drawFrog();
+    void draw();
     void reset();
     int getScore() const;
     const std::vector<Line>& getLines() const; // Ajout de la méthode getLines
@@ -30,5 +32,8 @@ public:
     void moveFrogLeft();
     void moveFrogRight();
     void toggleTurtleWalkable();
+    void checkFrogOnLine(Line& line);
+    bool isFrogOnFinishCell();
+    void setupFinishLinePairs();
 };
 
