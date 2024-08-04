@@ -34,6 +34,6 @@ const bool Cell::isWalkable() const{
 }
 
 bool Cell::contains(Point p) const {
-    return (p.x >= center.x && p.x <= center.x + w &&
-            p.y >= center.y && p.y <= center.y + h);
+    return (p.x >= center.x - w/2 && p.x <= center.x + w/2 &&
+            p.y >= center.y - h/2 && p.y <= center.y + h/2);
 }

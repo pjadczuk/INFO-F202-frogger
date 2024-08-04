@@ -53,10 +53,8 @@ void Board::initialize() {
 
     // Ligne 13 : Trottoir (Arrivée)
     lines.emplace_back(Line::FINISH, 13, FL_MAGENTA, cellWidth, cellHeight);
-    std::vector<int> WalkableCells = {0, 1, 4, 5,8,9,12,13};
-    for (int index : WalkableCells) {
-        lines.back().switchWalkableCell(index);
-    }
+    setupFinishLinePairs();
+    
     addObstaclesToLines();
     // Initialiser le score
     score = 0;
@@ -126,6 +124,11 @@ void Board::moveFrogRight() {
 
 void Board::update() {
     for (auto& line : lines) {
+        if (isFrogOnFinishCell()) {
+        // Code à exécuter lorsque le Frog atteint une cellule de la ligne FINISH
+        // Par exemple, augmenter le score, passer au niveau suivant, etc.
+        score++;
+        }
         if (frog.getPosHeight() == line.getNumerLine()) {
             checkFrogOnLine(line);
         } else {
@@ -136,7 +139,6 @@ void Board::update() {
         }
     }
 
-    // Autres mises à jour du jeu si nécessaire (ex. mettre à jour le score)
 }
 
 void Board::checkFrogOnLine(Line& line) {
@@ -155,9 +157,8 @@ void Board::checkFrogOnLine(Line& line) {
             }
         }
     }
-
     // Si après avoir vérifié tous les obstacles, la grenouille n'est pas sur un obstacle montable
-    if (!frogOnValidObstacle && !line.isWalkable()) {
+    if (!frogOnValidObstacle && !line.isWalkable() && !isFrogOnFinishCell()) {
         frog.resetToInitialCenter(); // Réinitialiser la grenouille si elle n'est pas sur un obstacle montable
     }
 }
@@ -167,9 +168,21 @@ bool Board::isFrogOnFinishCell() {
     for (auto& line : lines) {
         if (line.getType() == Line::FINISH) {
             // Vérifier si le Frog est sur une cellule walkable de cette ligne
-            for (auto& cell : line.getCells()) {
+            for (size_t i = 0; i < line.getCells().size(); ++i) {
+                Cell& cell = line.getCells()[i];
                 if (cell.isWalkable() && cell.contains(frog.getCenter())) {
+                    // Marquer la cellule et sa paire comme non-walkable
                     cell.setWalkable(false);
+
+                    // Déterminer l'index de la cellule paire
+                    size_t pairIndex = (i % 2 == 0) ? i + 1 : i - 1;
+
+                    // Vérifier que l'index de la paire est valide
+                    if (pairIndex < line.getCells().size()) {
+                        Cell& pairCell = line.getCells()[pairIndex];
+                        pairCell.setWalkable(false);
+                    }
+
                     return true; // Le Frog est sur une cellule walkable
                 }
             }
