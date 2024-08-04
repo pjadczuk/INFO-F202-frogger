@@ -1,25 +1,99 @@
+#pragma once
+
 #include "../include/frog.hpp"
+#include <FL/Enumerations.H>
+#include <array>
 
+Frog::Frog(Point initCenter, int w, int h, Fl_Color bodyCol)
+    : center(initCenter), width(w), height(h), bodyColor(bodyCol), direction(0), onObstacle(false), obstacleMountable(false) {}
 
-void Frog::move(Direction dir) {
-    direction = dir;
-    switch (dir) {
-    case Direction::Up:    position.y -= speed; break;
-    case Direction::Down:  position.y += speed; break;
-    case Direction::Left:  position.x -= speed; break;
-    case Direction::Right: position.x += speed; break;
+void Frog::draw() const {
+    // Dessiner le corps de la grenouille (rectangle)
+    std::array<Point, 5> bodyPoints{
+        Point{center.x - width / 2 , center.y - height / 2 },
+        Point{center.x - width / 2 , center.y + height / 2 },
+        Point{center.x + width / 2 , center.y + height / 2 },
+        Point{center.x + width / 2 , center.y - height / 2 },
+        Point{center.x - width / 2 , center.y - height / 2 }
+    };
+    fl_color(bodyColor);
+    fl_begin_polygon();
+    for (const auto& point : bodyPoints) {
+        fl_vertex(point.x, point.y);
+    }
+    fl_end_polygon();
+
+    // Dessiner la tête (triangle) pour indiquer la direction
+    std::array<Point, 3> headPoints;
+    switch (direction) {
+        case 0: // Haut
+            headPoints = {
+                Point{center.x, center.y - height / 2},
+                Point{center.x - width /2 , center.y - height / 2 + 10},
+                Point{center.x + width /2, center.y - height / 2 + 10}
+            };
+            break;
+        case 1: // Droite
+            headPoints = {
+                Point{center.x + width / 2, center.y},
+                Point{center.x + width / 2-10, center.y - height / 2},
+                Point{center.x + width / 2-10, center.y + height / 2}
+            };
+            break;
+        case 2: // Bas
+            headPoints = {
+                Point{center.x, center.y + height / 2 },
+                Point{center.x - width / 2, center.y + height / 2 -10},
+                Point{center.x + width / 2, center.y + height / 2 -10}
+            };
+            break;
+        case 3: // Gauche
+            headPoints = {
+                Point{center.x - width / 2, center.y},
+                Point{center.x - width / 2 + 10, center.y - height / 2},
+                Point{center.x - width / 2 + 10, center.y + height / 2}
+            };
+            break;
+        default:
+            return;
+    }
+
+    fl_color(FL_BLACK);
+    fl_begin_polygon();
+    for (const auto& point : headPoints) {
+        fl_vertex(point.x, point.y);
+    }
+    fl_end_polygon();
+}
+
+int Frog::getHeight() {
+    return height;
+}
+
+int Frog::getWidth() {
+    return width;
+}
+
+void Frog::move(int dx, int dy) {
+    center.x += dx;
+    center.y += dy;
+}
+
+void Frog::setDirection(int dir) {
+    if (dir >= 0 && dir <= 3) {
+        direction = dir;
     }
 }
 
-void Frog::loseLife() { if (lives > 0) --lives; }
-
-void Frog::resetPosition(Point startPos) { position = startPos; }
-
-void Frog::draw() {
-    fl_color(FL_GREEN);
-    fl_rectf(position.x - 10, position.y - 10, 20, 20);
+void Frog::checkCollision(Obstacle* obstacle) {
+    if (obstacle && obstacle->contains(center)) {
+        onObstacle = true;
+        obstacleMountable = obstacle->isMountable();
+        if (obstacleMountable) {
+            move(obstacle->getSpeed()); // Déplacement avec l'obstacle
+        }
+    } else {
+        onObstacle = false;
+        obstacleMountable = false;
+    }
 }
-
-int Frog::getLives() const { return lives; }
-
-Point Frog::getPosition() const { return position; }

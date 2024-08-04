@@ -21,13 +21,6 @@ public:
     bool isMountable() const { return mountable; }
     bool contains(Point p) const;
     Point getPosition() const { return position; }
+    virtual int getSpeed();
 };
 
-class MovingObstacle : public Obstacle {
-protected:
-    int speed;
-
-public:
-    MovingObstacle(Point pos, int w, int h, Fl_Color col, int spd, bool mnt);
-    void move() override; // Implémentation de la méthode de déplacement
-};

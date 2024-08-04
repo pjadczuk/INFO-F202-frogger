@@ -1,10 +1,15 @@
 #include "../../include/board/board.hpp"
 
 Board::Board(int windowWidth, int windowHeight)
-    : windowWidth(windowWidth), windowHeight(windowHeight), score(0) {
+    : windowWidth(windowWidth), windowHeight(windowHeight), 
+    frog(Point{windowWidth / 2,  13*windowHeight/14 - ((windowHeight/14)/2)},windowWidth/14 , windowHeight/14, FL_GREEN), 
+    score(0) {
     initialize();
 }
 
+Frog& Board::getFrog() {
+    return frog;
+}
 void Board::initialize() {
     lines.clear(); // Effacer les anciennes lignes, s'il y en a
 
@@ -36,10 +41,36 @@ void Board::initialize() {
 }
 
 void Board::addObstaclesToLines(){
-    lines[1].addObstacle(new Car(Point{0,lines[1].getHeight()* (11)}, lines[1].getWidth(), lines[1].getHeight(), 2));
-    lines[1].addObstacle(new Car(Point{200,lines[1].getHeight()* (11)}, lines[1].getWidth(), lines[1].getHeight(), 2));
-    lines[2].addObstacle(new Car(Point{909,lines[2].getHeight()* (10)}, lines[2].getWidth(), lines[2].getHeight(), -1));
+    for (int i = 0; i < 3; i++) lines[1].addObstacle(new Car(Point{i * 200,lines[1].getHeight()* (11) }, lines[1].getWidth(), lines[1].getHeight(), -1));
+    for (int i = 0; i < 3; i++) lines[2].addObstacle(new Car(Point{i * 200,lines[2].getHeight()* (10) }, lines[2].getWidth(), lines[1].getHeight(), 1));
+    for (int i = 0; i < 3; i++) lines[3].addObstacle(new Car(Point{i * 200,lines[3].getHeight()* (9) }, lines[3].getWidth(), lines[1].getHeight(), -3));
+    for (int i = 1; i < 4; i++) lines[4].addObstacle(new Car(Point{i * 200,lines[4].getHeight()* (8) }, lines[4].getWidth(), lines[1].getHeight(), 2));
+    for (int i = 1; i <3; i++) lines[5].addObstacle(new Truck(Point{i * 300,lines[5].getHeight()* (7) }, lines[5].getWidth()*2, lines[1].getHeight(), -1));
+   
 }
+
+// Méthodes de mouvement de la grenouille
+void Board::moveFrogUp() {
+    frog.setDirection(0);
+    frog.move(0, -1 * windowHeight/14);
+}
+
+void Board::moveFrogDown() {
+    frog.setDirection(2);
+    frog.move(0, windowHeight/14);
+}
+
+void Board::moveFrogLeft() {
+    frog.setDirection(3);
+    frog.move(-1 * windowWidth/14, 0);
+}
+
+void Board::moveFrogRight() {
+    frog.setDirection(1);
+    frog.move(windowWidth/14, 0);
+}
+
+
 
 void Board::update() {
     // Mettre à jour les obstacles sur chaque ligne
@@ -62,6 +93,7 @@ void Board::draw() {
     for (auto& line : lines) {
         line.drawBackground();
     }
+    frog.draw();
 }
 void Board::drawObstacles() {
     for (auto& line : lines) {

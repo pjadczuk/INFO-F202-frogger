@@ -5,7 +5,7 @@ Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int 
     : walkable(type != WATER), type(type), cellHeight(cellHeight), cellWidth(cellWidth) {
     // Créer les cellules de la ligne
     for (int i = 0; i < numCells; ++i) {
-        Point center = {cellWidth * i + cellWidth / 2, cellHeight * (13-numerLine) + cellHeight / 2}; // Positionnement des cellules
+        Point center = {cellWidth * i + cellWidth / 2, cellHeight * (14-numerLine) - cellHeight / 2}; // Positionnement des cellules
         cells.emplace_back(center, cellWidth, cellHeight, cellColor, walkable);
     }
 }

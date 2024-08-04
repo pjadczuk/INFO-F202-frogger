@@ -1,9 +1,12 @@
 #include "../include/mainWindow.hpp"
 #include <FL/Fl.H>
+#include <memory>
 
 // Constructeur
 MainWindow::MainWindow(int width, int height, const char* title)
-    : Fl_Window(width, height, title), board(width,height) {
+    : Fl_Window(width, height, title), 
+      board(width, height),
+      inputHandler(&board){
     // Commencer la boucle de rafraîchissement des éléments dynamiques
     Fl::add_timeout(1.0 / 60, Timer_CB, this);  // 60 fps
 }
@@ -31,6 +34,7 @@ int MainWindow::handle(int event) {
         return 1;
       case FL_KEYDOWN:
         // Gérer les pressions de touches si nécessaire
+        inputHandler.handleKeyPress(Fl::event_key());
         return 1;
       default:
         return Fl_Window::handle(event);  // Appeler le gestionnaire d'événements par défaut

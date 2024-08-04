@@ -15,3 +15,7 @@ void Obstacle::move() {
     else if(position.x < -width && speed < 0) position.x =910 + width;
     //else position.x = +width;
 }
+
+int Obstacle::getSpeed() {
+    
+}
