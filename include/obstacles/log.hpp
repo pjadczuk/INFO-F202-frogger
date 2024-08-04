@@ -4,7 +4,6 @@
 
 class Log : public Obstacle {
 public:
-    Log(Point pos, int spd);
-    void move() override;
-    void draw() override;
+    Log(Point pos, int w, int h, int spd);
+    void draw() const override;
 };

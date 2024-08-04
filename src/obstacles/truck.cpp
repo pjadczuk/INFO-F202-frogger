@@ -1,19 +1,9 @@
 #include "../../include/obstacles/truck.hpp"
-#include <FL/fl_draw.H>
 
-Truck::Truck(Point pos, int spd)
-    : Obstacle(pos, spd, 80, 20) // largeur = 80, hauteur = 20
-{}
+Truck::Truck(Point pos, int w, int h, int spd)
+    : Obstacle(pos, w, h, FL_DARK_RED, false, spd) {}
 
-void Truck::move() {
-    position.x += speed;
-    // Si le camion sort de l'écran, le repositionner
-    if (position.x > 500) {
-        position.x = 0;
-    }
-}
-
-void Truck::draw() {
-    fl_color(FL_BLUE);
-    fl_rectf(position.x - width / 2, position.y - height / 2, width, height);
+void Truck::draw() const {
+    fl_color(color);
+    fl_draw_box(FL_FLAT_BOX, position.x, position.y, width, height, color);
 }

@@ -15,7 +15,7 @@ void MainWindow::drawStaticElements() {
 
 // Dessiner les éléments dynamiques (appelé fréquemment)
 void MainWindow::drawDynamicElements() {
-    //board.update();            // Mettre à jour l'état des éléments dynamiques
+    board.update();            // Mettre à jour l'état des éléments dynamiques
     board.drawObstacles();     // Dessiner les obstacles en mouvement
     // Ici, vous pourriez également dessiner d'autres éléments dynamiques comme la grenouille
 }

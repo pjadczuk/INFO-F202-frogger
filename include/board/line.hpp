@@ -17,6 +17,8 @@ private:
     std::vector<Obstacle*> obstacles; // Contient les obstacles sur la ligne
     bool walkable;                // Indique si la ligne est marchable
     LineType type;                // Type de la ligne
+    int cellHeight;
+    int cellWidth;
 
 public:
     Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight , int numCells = 14);
@@ -29,4 +31,6 @@ public:
     void drawObstacles() const;  // Dessiner les obstacles (dynamique)
     const std::vector<Cell>& getCells() const;
     const std::vector<Obstacle*>& getObstacles() const;
+    int getWidth();
+    int getHeight();
 };

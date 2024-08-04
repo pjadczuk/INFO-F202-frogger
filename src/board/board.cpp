@@ -30,10 +30,16 @@ void Board::initialize() {
     // Ligne 13 : Trottoir (Arrivée)
     lines.emplace_back(Line::SIDEWALK, 13, FL_MAGENTA, cellWidth, cellHeight);
 
+    addObstaclesToLines();
     // Initialiser le score
     score = 0;
 }
 
+void Board::addObstaclesToLines(){
+    lines[1].addObstacle(new Car(Point{0,lines[1].getHeight()* (11)}, lines[1].getWidth(), lines[1].getHeight(), 2));
+    lines[1].addObstacle(new Car(Point{200,lines[1].getHeight()* (11)}, lines[1].getWidth(), lines[1].getHeight(), 2));
+    lines[2].addObstacle(new Car(Point{909,lines[2].getHeight()* (10)}, lines[2].getWidth(), lines[2].getHeight(), -1));
+}
 
 void Board::update() {
     // Mettre à jour les obstacles sur chaque ligne
@@ -58,9 +64,10 @@ void Board::draw() {
     }
 }
 void Board::drawObstacles() {
-
+    for (auto& line : lines) {
+        line.drawObstacles();
+    }
 }
-
 // Réinitialiser l'état du jeu
 void Board::reset() {
     // Réinitialiser les lignes et les obstacles

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "line.hpp"
-
+#include "../obstacles/car.hpp"
 
 class Board {
 private:
@@ -10,6 +10,7 @@ private:
     int windowWidth;
     int windowHeight;
     void initialize();
+    void addObstaclesToLines();
 public:
     Board(int windowWidth, int windowHeight);
     void update();

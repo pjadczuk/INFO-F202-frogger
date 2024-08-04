@@ -1,5 +1,4 @@
 #include "../../include/board/cell.hpp"
-#include <iostream>
 
 
 // Constructeur de la classe Cell

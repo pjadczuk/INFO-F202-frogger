@@ -1,13 +1,8 @@
-#ifndef CAR_HPP
-#define CAR_HPP
-
+#pragma once
 #include "obstacle.hpp"
 
 class Car : public Obstacle {
 public:
-    Car(Point pos, int spd);
-    void move() override;
-    void draw() override;
+    Car(Point pos, int w, int h, int spd);
+    void draw() const override;
 };
-
-#endif // CAR_HPP

@@ -1,8 +1,8 @@
 #include "../../include/board/line.hpp"
-#include <iostream>
+
 
 Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight,  int numCells)
-    : walkable(type != WATER), type(type) {
+    : walkable(type != WATER), type(type), cellHeight(cellHeight), cellWidth(cellWidth) {
     // Créer les cellules de la ligne
     for (int i = 0; i < numCells; ++i) {
         Point center = {cellWidth * i + cellWidth / 2, cellHeight * (13-numerLine) + cellHeight / 2}; // Positionnement des cellules
@@ -24,6 +24,14 @@ bool Line::isWalkable() const {
 
 Line::LineType Line::getType() const {
     return type;
+}
+
+int Line::getWidth() {
+    return cellWidth;
+}
+
+int Line::getHeight() {
+    return cellHeight;
 }
 
 void Line::addObstacle(Obstacle* obstacle) {

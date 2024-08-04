@@ -1,13 +1,9 @@
 #include "../../include/obstacles/car.hpp"
 
-Car::Car(Point pos, int spd) : Obstacle(pos, spd, 50, 20) {}
+Car::Car(Point pos, int w, int h, int spd)
+    : Obstacle(pos, w, h, FL_RED, false, spd) {}
 
-void Car::move() {
-    position.x += speed;
-    // Logic for resetting position when off-screen
-}
-
-void Car::draw() {
-    fl_color(FL_RED);
-    fl_rectf(position.x - width / 2, position.y - height / 2, width, height);
+void Car::draw() const {
+    fl_color(color);
+    fl_draw_box(FL_FLAT_BOX, position.x, position.y, width, height, color);
 }
