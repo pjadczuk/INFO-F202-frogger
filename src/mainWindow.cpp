@@ -5,24 +5,17 @@
 // Constructeur
 MainWindow::MainWindow(int width, int height, const char* title)
     : Fl_Window(width, height, title), 
-      board(width, height),
-      inputHandler(&board){
+      game(width, height)
+{
     // Commencer la boucle de rafraîchissement des éléments dynamiques
     Fl::add_timeout(1.0 / 60, Timer_CB, this);  // 60 fps
     Fl::add_timeout(1.0, toggleTurtles_CB, this);  // Appeler toggleTurtles_CB toutes les secondes
+    //Fl::add_timeout(1.0, drawHUD_CB, this); 
 }
 
-// Dessiner les éléments statiques (appelé une seule fois)
-void MainWindow::drawStaticElements() {
-    board.drawBackground();  // Dessiner le plateau statique (lignes)
-}
-
-// Dessiner les éléments dynamiques (appelé fréquemment)
-void MainWindow::drawDynamicElements() {
-    board.update();            // Mettre à jour l'état des éléments dynamiques
-    board.drawObstacles();     // Dessiner les obstacles en mouvement
-    board.drawFrog();
-    // Ici, vous pourriez également dessiner d'autres éléments dynamiques comme la grenouille
+void MainWindow::draw() {
+    Fl_Window::draw();
+    game.draw();
 }
 
 // Gérer les événements (par exemple, la souris et le clavier)
@@ -36,7 +29,7 @@ int MainWindow::handle(int event) {
         return 1;
       case FL_KEYDOWN:
         // Gérer les pressions de touches si nécessaire
-        inputHandler.handleKeyPress(Fl::event_key());
+        game.handleInput(Fl::event_key());
         return 1;
       default:
         return Fl_Window::handle(event);  // Appeler le gestionnaire d'événements par défaut
@@ -52,12 +45,7 @@ void MainWindow::Timer_CB(void *userdata) {
 
 void MainWindow::toggleTurtles_CB(void* userdata) {
     MainWindow* o = static_cast<MainWindow*>(userdata);
-    o->board.toggleTurtleWalkable();  // Changer l'état des tortues
+    o->game.getBoard()->toggleTurtleWalkable();  // Changer l'état des tortues
     Fl::repeat_timeout(1.0, toggleTurtles_CB, userdata);  // Répéter toutes les secondes
 }
 
-void MainWindow::draw() {
-    Fl_Window::draw();
-    drawStaticElements();  // Dessiner les éléments statiques
-    drawDynamicElements(); // Dessiner les éléments dynamiques
-}

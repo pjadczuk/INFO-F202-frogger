@@ -1,4 +1,5 @@
 #include "../../include/board/line.hpp"
+#include <iostream>
 
 
 Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight,  int numCells)
@@ -14,6 +15,7 @@ Line::~Line() {
     // Libérer les obstacles
     for (auto& obstacle : obstacles) {
         delete obstacle;
+        std::cout << "obstacle and Line destructor called" << std::endl;
     }
     obstacles.clear();
 }

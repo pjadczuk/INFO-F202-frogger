@@ -1,15 +1,31 @@
 #include "../../include/board/board.hpp"
+#include <FL/Enumerations.H>
 #include <iostream>
 
 Board::Board(int windowWidth, int windowHeight)
     : windowWidth(windowWidth), windowHeight(windowHeight), 
     frog(Point{windowWidth / 2,  13*windowHeight/14 - ((windowHeight/14)/2)},windowWidth/14 , windowHeight/14, FL_GREEN), 
-    score(0) {
+    gameState(120,3),
+    scoreText("Score: 0", Point{10, 20}, 16, FL_WHITE),
+    livesText("Lives: 3", Point{10, 40}, 16, FL_WHITE),
+    timeText("Time: 120", Point{10, 60}, 16, FL_WHITE) {
     initialize();
 }
 
 Frog& Board::getFrog() {
     return frog;
+}
+
+void Board::drawHUD() {
+    // Dessiner le score
+    fl_color(FL_WHITE);
+    fl_draw(("Score: " + std::to_string(gameState.getScore())).c_str(), 10, windowWidth -10);
+
+    // Dessiner le nombre de vies restantes
+    fl_draw(("Lives: " + std::to_string(gameState.getLives())).c_str(), 10, windowWidth - 30);
+
+    // Dessiner le temps restant
+    fl_draw(("Time: " + std::to_string(gameState.getRemainingTime())).c_str(), 10, windowWidth - 50);
 }
 
 void Board::setupFinishLinePairs() {
@@ -56,8 +72,6 @@ void Board::initialize() {
     setupFinishLinePairs();
     
     addObstaclesToLines();
-    // Initialiser le score
-    score = 0;
 }
 
 void Board::addObstaclesToLines(){
@@ -83,7 +97,7 @@ void Board::toggleTurtleWalkable() {
             turtle->setWalkable();
         }
     }
-    
+    gameState.decreaseTime(1);
     // Vérifier si la ligne 10 contient au moins une tortue
     if (!lines[10].getObstacles().empty()) {
         // La première tortue de la ligne 10
@@ -127,9 +141,11 @@ void Board::update() {
         if (isFrogOnFinishCell()) {
         // Code à exécuter lorsque le Frog atteint une cellule de la ligne FINISH
         // Par exemple, augmenter le score, passer au niveau suivant, etc.
-        score++;
+        gameState.increaseScore(1);
+        gameState.resetTime();
+        frog.resetToInitialCenter();
         }
-        if (frog.getPosHeight() == line.getNumerLine()) {
+        else if (frog.getPosHeight() == line.getNumerLine()) {
             checkFrogOnLine(line);
         } else {
             // Déplacer les obstacles même si la grenouille n'est pas sur la ligne
@@ -139,6 +155,23 @@ void Board::update() {
         }
     }
 
+    if (gameState.getRemainingTime() == 0) {
+        gameState.loseLife();
+        gameState.resetTime();
+        frog.resetToInitialCenter();
+    }
+
+    if (!isInsideTheWindow(frog.getCenter())){
+        gameState.loseLife();
+        gameState.resetTime();
+        frog.resetToInitialCenter();
+    }
+}
+
+bool Board::isInsideTheWindow(Point frogCenter) {
+    if (frogCenter.x >=0 && frogCenter.x <= windowWidth &&
+    frogCenter.y >= 0 && frogCenter.y <= 13*windowHeight/14) return true;
+    else return false;
 }
 
 void Board::checkFrogOnLine(Line& line) {
@@ -149,6 +182,8 @@ void Board::checkFrogOnLine(Line& line) {
 
         if (obstacle->contains(frog.getCenter())) {
             if (line.isWalkable()) {
+                gameState.loseLife();
+                gameState.resetTime();
                 frog.resetToInitialCenter();
                 return; // Si c'est une ligne marchable et qu'il y a collision, réinitialiser la grenouille
             } else if (obstacle->isMountable()) {
@@ -159,6 +194,8 @@ void Board::checkFrogOnLine(Line& line) {
     }
     // Si après avoir vérifié tous les obstacles, la grenouille n'est pas sur un obstacle montable
     if (!frogOnValidObstacle && !line.isWalkable() && !isFrogOnFinishCell()) {
+        gameState.loseLife();
+        gameState.resetTime();
         frog.resetToInitialCenter(); // Réinitialiser la grenouille si elle n'est pas sur un obstacle montable
     }
 }
@@ -219,12 +256,22 @@ void Board::reset() {
     // (par exemple, le score, la position de la grenouille)
 }
 
-// Obtenir le score actuel
-int Board::getScore() const {
-    return score;
-}
+
 
 // Obtenir les lignes actuelles
 const std::vector<Line>& Board::getLines() const {
     return lines;
+}
+
+int Board::getGameLives() {
+    return gameState.getLives();
+}
+
+int Board::getGameScore() {
+    return gameState.getScore();
+}
+
+Board::~Board() {
+    std::cout << "Board destructor called" << std::endl;
+    // Autres nettoyages si nécessaire
 }

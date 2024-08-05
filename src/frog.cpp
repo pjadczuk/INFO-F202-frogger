@@ -96,9 +96,11 @@ void Frog::move(int dx, int dy) {
 }
 
 void Frog::setDirection(int dir) {
-    if (dir >= 0 && dir <= 3) {
-        direction = dir;
+    if (dir < 0 || dir > 3) {
+        std::cerr << "Error: Invalid direction value: " << dir << std::endl;
+        return;
     }
+    direction = dir;
 }
 
 

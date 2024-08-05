@@ -2,12 +2,14 @@
 #include <FL/Fl_Window.H>
 #include "board/board.hpp"
 #include "intputHandler.hpp"
+#include "game.hpp"
 #include "frog.hpp"
 
 class MainWindow : public Fl_Window {
 private:
-    Board board;
-    InputHandler inputHandler;
+    //Board board;
+    //InputHandler inputHandler;
+    Game game;
 public:
     MainWindow(int width, int height, const char* title);
     void drawStaticElements();   // Dessiner les éléments statiques
@@ -16,4 +18,5 @@ public:
     int handle(int event) override;
     static void Timer_CB(void *userdata);
     static void toggleTurtles_CB(void* userdata);
+    //static void drawHUD_CB(void* userdata);
 };

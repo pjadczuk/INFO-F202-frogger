@@ -1,11 +1,15 @@
 #include <FL/Fl.H>
+#include <iostream>
 #include "../include/intputHandler.hpp"
 
 // Constructeur
 InputHandler::InputHandler(Board* b) : board(b) {}
 
 void InputHandler::handleKeyPress(int key) {
-    // Utiliser `board` pour gérer les entrées
+    if (!board) {
+        std::cerr << "Error: Board pointer is null." << std::endl;
+        return;
+    }
     switch (key) {
         case FL_Up:
         case 'z':

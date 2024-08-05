@@ -1,27 +1,30 @@
+// game.hpp
 #pragma once
 
-#include "frog.hpp"
-
-class AbstractView;
-class AbstractController;
+#include <memory>
+#include "board/board.hpp"
 
 class Game {
 private:
-    Frog frog;
-    int score;
-    int highScore;
-    AbstractView* view;
-    AbstractController* controller;
+    std::unique_ptr<Board> board;
+    bool gameRunning;
+    bool gameWon;
+    int windowWidth;
+    int windowHeight;
 
 public:
-    Game();
+    Game(int windowWidth, int windowHeight);
+    ~Game();
     void start();
     void update();
-    void end();
+    void draw();
+    void checkGameState();
+    bool isGameRunning() const;
+    bool isGameWon() const;
     void reset();
-    void loseLife();
-    int getScore() const;
-    int getHighScore() const;
-
-    Frog& getFrog() { return frog; } // Retourne une référence à l'objet Frog
+    Board* getBoard();
+    // Démarrer une nouvelle partie
+    void startNewGame();
+    void handleInput(int key);
 };
+
