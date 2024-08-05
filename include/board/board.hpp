@@ -30,7 +30,7 @@ public:
     void drawObstacles();
     void drawFrog();
     void draw();
-    void reset();
+    void reseting();
     const std::vector<Line>& getLines() const; // Ajout de la méthode getLines
     Frog& getFrog();  // Méthode pour obtenir une référence à la grenouille
     void moveFrogUp();

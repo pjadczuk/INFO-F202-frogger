@@ -5,19 +5,16 @@
 Game::Game(int windowWidth, int windowHeight)
     : gameRunning(true), gameWon(false), windowWidth(windowWidth), windowHeight(windowHeight), 
       board(std::make_unique<Board>(windowWidth, windowHeight)) {}
+
+
 Game::~Game() {
-    // std::unique_ptr se charge de supprimer l'objet Board
+    std::cout<<"suppression de game\n";
 }
 
-// Démarrer une nouvelle partie
+
 void Game::startNewGame() {
-    board = std::make_unique<Board>(windowWidth, windowHeight); // Crée un nouvel objet Board
-}
-
-void Game::start() {
     gameRunning = true;
     gameWon = false;
-    board.reset();
 }
 
 void Game::update() {
@@ -37,9 +34,11 @@ void Game::draw() {
     } else {
         fl_color(FL_WHITE);
         if (gameWon) {
-            //fl_draw("You Win!", windowWidth / 2, windowHeight / 2);
+            fl_draw("You Win!", windowWidth / 2 - 50, windowHeight / 2);
+			fl_draw("Type 'x' if you want to play again",windowWidth / 2 - 140,windowHeight / 2 + 30);
         } else {
-            //fl_draw("Game Over", windowWidth / 2, windowHeight / 2);
+            fl_draw("Game Over", windowWidth / 2 - 50, windowHeight / 2);
+			fl_draw("Type 'x' if you want to play again",windowWidth / 2 - 140,windowHeight / 2 + 30);
         }
     }
 }
@@ -62,10 +61,6 @@ bool Game::isGameWon() const {
     return gameWon;
 }
 
-void Game::reset() {
-    start();
-}
-
 Board* Game::getBoard() {
     return board.get();
 }
@@ -79,6 +74,7 @@ void Game::handleInput(int key) {
     switch (key) {
         case FL_Up:
         case 'z':
+		case 'w':
             board->moveFrogUp();
             break;
         case FL_Down:
@@ -91,8 +87,13 @@ void Game::handleInput(int key) {
             break;
         case FL_Right:
         case 'd':
+		case 'a':
             board->moveFrogRight();
             break;
+		case 'x':
+			startNewGame();
+			board->reseting();
+			break;
         default:
             break;
     }

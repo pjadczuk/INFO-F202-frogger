@@ -249,11 +249,11 @@ void Board::draw() {
     //drawBackground();drawObstacles();drawFrog();
 }
 // Réinitialiser l'état du jeu
-void Board::reset() {
+void Board::reseting() {
     // Réinitialiser les lignes et les obstacles
-    initialize(); // Réinitialiser les lignes du plateau
-    // Réinitialiser d'autres éléments du jeu si nécessaire
-    // (par exemple, le score, la position de la grenouille)
+    gameState.reset(120,3);
+    initialize();
+    frog.resetToInitialCenter();
 }
 
 

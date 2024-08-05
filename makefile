@@ -1,6 +1,6 @@
 CXX = g++
-CXXFLAGS = -std=c++17 -Wall -g -fsanitize=address -fno-omit-frame-pointer -Iinclude -Iinclude/board -Iinclude/obstacles
-LDFLAGS = -lfltk -fsanitize=address
+CXXFLAGS = -std=c++17 -Wall -g  -fno-omit-frame-pointer -Iinclude -Iinclude/board -Iinclude/obstacles
+LDFLAGS = -lfltk 
 
 SRC_DIR = src
 OBJ_DIR = obj

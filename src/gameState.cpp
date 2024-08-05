@@ -1,12 +1,14 @@
 #include "../include/gameState.hpp"
+#include <iostream>
 
 GameState::GameState(int initialTime, int initialLives)
     : score(0), remainingTime(initialTime), lives(initialLives) {}
 
-void GameState::reset(int initialTime = 120, int initialLives = 3) {
+void GameState::reset(int initialTime, int initialLives) {
     score = 0;
     remainingTime = initialTime;
     lives = initialLives;
+    std::cout <<remainingTime<<" et" << lives<<std::endl;
 }
 
 int GameState::getScore() const {

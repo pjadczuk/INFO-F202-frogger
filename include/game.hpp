@@ -4,6 +4,7 @@
 #include <memory>
 #include "board/board.hpp"
 
+
 class Game {
 private:
     std::unique_ptr<Board> board;
