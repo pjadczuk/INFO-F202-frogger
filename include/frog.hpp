@@ -17,10 +17,14 @@ public:
     void setDirection(int dir) override;
     Point getCenter() const override { return center; }
     int getDirection() const override { return direction; }
+   
     bool isOnObstacle() const { return onObstacle; }
     bool isObstacleMountable() const { return obstacleMountable; }
+   
     void setInitCenter(Point initCenter);
     void resetToInitialCenter();
+
+
     int getPosHeight();
     void incrementPosHeight() { posH++; }
     void decrementPosHeight() { posH--; }

@@ -1,5 +1,4 @@
-#ifndef POINT_HPP
-#define POINT_HPP
+#pragma once
 
 struct Point {
     int x, y;
@@ -16,4 +15,3 @@ struct Point {
     }
 };
 
-#endif // POINT_HPP

@@ -25,27 +25,30 @@ private:
 public:
     Board(int windowWidth, int windowHeight);
     ~Board();
+    
     void update();
-    void drawBackground();
-    void drawObstacles();
-    void drawFrog();
-    void draw();
     void reseting();
-    const std::vector<Line>& getLines() const; // Ajout de la méthode getLines
-    Frog& getFrog();  // Méthode pour obtenir une référence à la grenouille
+
+
     void moveFrogUp();
     void moveFrogDown();
     void moveFrogLeft();
     void moveFrogRight();
+
     void toggleTurtleWalkable();
     void checkFrogOnLine(Line& line);
     bool isFrogOnFinishCell();
     bool isInsideTheWindow(Point frogCenter);
     void setupFinishLinePairs();
+    
     void drawHUD();
-    void checkGameOver(); // Vérifie si le jeu est terminé
-    void renderGameState(); // Affiche l'état du jeu (score, vies, etc.)
+    void drawBackground();
+    void drawObstacles();
+    void drawFrog();
+
     int getGameLives();
     int getGameScore();
+    Frog& getFrog();
+    const std::vector<Line>& getLines() const;
 };
 

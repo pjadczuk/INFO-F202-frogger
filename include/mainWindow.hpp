@@ -1,7 +1,6 @@
 #pragma once
 #include <FL/Fl_Window.H>
 #include "board/board.hpp"
-#include "intputHandler.hpp"
 #include "game.hpp"
 #include "frog.hpp"
 

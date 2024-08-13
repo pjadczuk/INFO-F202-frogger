@@ -6,18 +6,24 @@ Frog::Frog(Point initCenter, int w, int h, Fl_Color bodyCol)
     setInitCenter(initCenter);
 }
 
-int Frog::getPosHeight() {
-    return posH;
-}
-
-void Frog::setInitCenter(Point initCenter) {
-    initialCenter = initCenter;
-}
-
 void Frog::resetToInitialCenter() {
     center = initialCenter;
     posH = 1;
     setDirection(0);
+}
+
+// Recupere la position de la grenouille à sa construction
+void Frog::setInitCenter(Point initCenter) {
+    initialCenter = initCenter;
+}
+
+ // 0 = Haut, 1 = Droite, 2 = Bas, 3 = Gauche
+void Frog::setDirection(int dir) {
+    if (dir < 0 || dir > 3) {
+        std::cerr << "Error: Invalid direction value: " << dir << std::endl;
+        return;
+    }
+    direction = dir;
 }
 
 void Frog::move(int dx, int dy) {
@@ -25,10 +31,6 @@ void Frog::move(int dx, int dy) {
     center.y += dy;
 }
 
-void Frog::setDirection(int dir) {
-    if (dir < 0 || dir > 3) {
-        std::cerr << "Error: Invalid direction value: " << dir << std::endl;
-        return;
-    }
-    direction = dir;
+int Frog::getPosHeight() {
+    return posH;
 }

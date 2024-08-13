@@ -12,16 +12,50 @@ Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int 
 }
 
 Line::~Line() {
-    // Libérer les obstacles
+    // Free les obstacles
     for (auto& obstacle : obstacles) {
         delete obstacle;
-        std::cout << "obstacle and Line destructor called" << std::endl;
+        //std::cout << "obstacle and Line destructor called" << std::endl;
     }
     obstacles.clear();
 }
 
 bool Line::isWalkable() const {
     return walkable;
+}
+
+void Line::addObstacle(Obstacle* obstacle) {
+    if (type != SIDEWALK) { // On peut ajouter des obstacles que sur les routes et rivières
+        obstacles.push_back(obstacle);
+    }
+}
+
+void Line::switchWalkableCell(int cellIndex) {
+    if (cellIndex >= 0 && cellIndex < cells.size()) {
+        cells[cellIndex].setWalkable(true);
+    }
+}
+
+void Line::drawBackground() {
+    // Dessiner les cellules de la ligne, le fond du jeu
+    for (auto& cell : cells) {
+        cell.draw();
+    }
+}
+
+void Line::drawObstacles() const {
+    // Dessiner les obstacles
+    for (const auto& obstacle : obstacles) {
+        obstacle->draw();
+    }
+}
+
+std::vector<Cell>& Line::getCells() {
+    return cells;
+}
+
+const std::vector<Obstacle*>& Line::getObstacles() const {
+    return obstacles;
 }
 
 Line::LineType Line::getType() const {
@@ -38,38 +72,4 @@ int Line::getHeight() {
 
 int Line::getNumerLine() {
     return numerLine;
-}
-
-void Line::addObstacle(Obstacle* obstacle) {
-    if (type != SIDEWALK) { // On ne peut ajouter des obstacles que sur les routes et rivières
-        obstacles.push_back(obstacle);
-    }
-}
-
-void Line::switchWalkableCell(int cellIndex) {
-    if (cellIndex >= 0 && cellIndex < cells.size()) {
-        cells[cellIndex].setWalkable(true);
-    }
-}
-
-void Line::drawBackground() {
-    // Dessiner les cellules de la ligne (statique)
-    for (auto& cell : cells) {
-        cell.draw();
-    }
-}
-
-void Line::drawObstacles() const {
-    // Dessiner les obstacles (dynamique)
-    for (const auto& obstacle : obstacles) {
-        obstacle->draw();
-    }
-}
-
-std::vector<Cell>& Line::getCells() {
-    return cells;
-}
-
-const std::vector<Obstacle*>& Line::getObstacles() const {
-    return obstacles;
 }

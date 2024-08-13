@@ -2,10 +2,9 @@
 
 class GameState {
 private:
-    int score;           // Score du joueur
-    int remainingTime;   // Temps restant en secondes
-    int lives;           // Nombre de vies restantes
-
+    int score;           
+    int remainingTime;   
+    int lives;          
 public:
     GameState(int initialTime, int initialLives);
     void reset(int initialTime, int initialLives);
@@ -21,7 +20,6 @@ public:
     void loseLife();
     void gainLife();
     void resetTime();
-    // Autres méthodes si nécessaire
     bool isGameOver() const;
     bool isVictory() const;
     bool isDefeat() const;

@@ -16,8 +16,8 @@ public:
     Obstacle(Point pos, int w, int h, Fl_Color col, bool mountable, int speed);
     virtual ~Obstacle() = default;
 
-    virtual void draw() const = 0; // Méthode pure virtuelle pour le dessin
-    virtual void move();       // Méthode pure virtuelle pour le mouvement
+    virtual void draw() const = 0; 
+    virtual void move(); 
     bool isMountable() const { return mountable; }
     bool contains(Point p) const;
     Point getPosition() const { return position; }

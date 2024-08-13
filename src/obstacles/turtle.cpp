@@ -15,10 +15,12 @@ void Turtle::setFillColor(Fl_Color newFillColor) {
 
 void Turtle::setWalkable() {
     if (mountable){
+        // Si montable on change de couleur et on passe en Non montable
         setFillColor(FL_BLUE);
         mountable = !mountable;
     }
     else{
+        // Sinon on fait l'inverse
         setFillColor(FL_YELLOW);
         mountable = !mountable;
     }

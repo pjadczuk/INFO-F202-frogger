@@ -58,9 +58,9 @@ bool GameState::isGameOver() const {
 }
 
 bool GameState::isVictory() const {
-    return score >= 4; // Condition de victoire
+    return score >= 4; 
 }
 
 bool GameState::isDefeat() const {
-    return lives <= 0 ; // Condition de défaite
+    return lives <= 0 ;
 }

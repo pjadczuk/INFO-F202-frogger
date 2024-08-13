@@ -8,7 +8,7 @@ Game::Game(int windowWidth, int windowHeight)
 
 
 Game::~Game() {
-    std::cout<<"suppression de game\n";
+    //std::cout<<"suppression de game\n";
 }
 
 
@@ -61,10 +61,6 @@ bool Game::isGameWon() const {
     return gameWon;
 }
 
-Board* Game::getBoard() {
-    return board.get();
-}
-
 void Game::handleInput(int key) {
     if (!board) {
         std::cerr << "Error: Board pointer is null." << std::endl;
@@ -97,4 +93,8 @@ void Game::handleInput(int key) {
         default:
             break;
     }
+}
+
+Board* Game::getBoard() {
+    return board.get();
 }

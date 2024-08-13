@@ -13,11 +13,12 @@ protected:
 
 public:
     Shape(Point initCenter, int w, int h, Fl_Color bodyCol);
+    virtual ~Shape() = default; 
     virtual void draw() const;
     virtual Point getCenter() const { return center; }
     virtual int getDirection() const { return direction; }
     virtual int getHeight();
     virtual int getWidth();
     virtual void setDirection(int dir);
-    virtual ~Shape() = default; // Ajout d'un destructeur virtuel par défaut
+
 };

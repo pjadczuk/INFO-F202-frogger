@@ -13,7 +13,7 @@ private:
 
 public:
     Cell(Point center, int w, int h, Fl_Color fillColor, bool Walkable);
-    void draw(); // Marquer la méthode comme const
+    void draw();
     void setWalkable(bool walkable);
     void setFillColor(Fl_Color fillColor);
     const bool isWalkable() const;

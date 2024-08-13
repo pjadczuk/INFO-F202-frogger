@@ -6,7 +6,7 @@ Shape::Shape(Point initCenter, int w, int h, Fl_Color bodyCol)
     : center(initCenter), width(w), height(h), bodyColor(bodyCol), direction(0) {}
 
 void Shape::draw() const {
-    // Dessiner le corps de la forme (rectangle)
+    // Dessiner le corps sous forme d'un rectangle
     std::array<Point, 5> bodyPoints{
         Point{center.x - width / 2 , center.y - height / 2 },
         Point{center.x - width / 2 , center.y + height / 2 },
@@ -21,7 +21,7 @@ void Shape::draw() const {
     }
     fl_end_polygon();
 
-    // Dessiner la tête (triangle) pour indiquer la direction
+    // Dessiner la tête sous forme d'un triangle dans le corps pour afficher la dirrection
     std::array<Point, 3> headPoints;
     switch (direction) {
         case 0: // Haut
@@ -64,18 +64,18 @@ void Shape::draw() const {
     fl_end_polygon();
 }
 
-int Shape::getHeight() {
-    return height;
-}
-
-int Shape::getWidth() {
-    return width;
-}
-
 void Shape::setDirection(int dir) {
     if (dir < 0 || dir > 3) {
         std::cerr << "Error: Invalid direction value: " << dir << std::endl;
         return;
     }
     direction = dir;
+}
+
+int Shape::getHeight() {
+    return height;
+}
+
+int Shape::getWidth() {
+    return width;
 }

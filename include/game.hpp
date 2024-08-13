@@ -24,7 +24,7 @@ public:
     bool isGameWon() const;
     void reset();
     Board* getBoard();
-    // Démarrer une nouvelle partie
+    
     void startNewGame();
     void handleInput(int key);
 };
