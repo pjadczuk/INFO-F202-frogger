@@ -1,6 +1,10 @@
 #include "../../include/board/board.hpp"
 #include <FL/Enumerations.H>
 #include <iostream>
+#include "../../include/obstacles/car.hpp"
+#include "../../include/obstacles/truck.hpp"
+#include "../../include/obstacles/log.hpp"
+#include "../../include/obstacles/turtle.hpp"
 
 Board::Board(int windowWidth, int windowHeight)
     : windowWidth(windowWidth), windowHeight(windowHeight), 

@@ -16,17 +16,6 @@ MainWindow::MainWindow(int width, int height, const char* title)
     Fl::add_timeout(1.0, welcomeScreenCallback, this);
 }
 
-
-void MainWindow::draw() {
-    Fl_Window::draw();
-    if (displayWelcomeScreen) {
-        drawWelcomeScreen();
-    } else {
-        game.draw(); // Afficher le jeu
-    }
-}
-
-
 int MainWindow::handle(int event) {
     switch (event) {
       case FL_MOVE:
@@ -63,6 +52,14 @@ void MainWindow::welcomeScreenCallback(void* userdata) {
     o->redraw(); 
 }
 
+void MainWindow::draw() {
+    Fl_Window::draw();
+    if (displayWelcomeScreen) {
+        drawWelcomeScreen();
+    } else {
+        game.draw(); // Afficher le jeu
+    }
+}
 
 void MainWindow::drawWelcomeScreen(){
   std::string welcomeMessage = R"(

@@ -2,8 +2,8 @@
 #include <FL/Enumerations.H>
 
 
-Cell::Cell(Point center, int w, int h, Fl_Color fillColor, bool walkable)
-    : center(center), w(w), h(h), fillColor(fillColor), walkable(walkable) {}
+Cell::Cell(int w, int h, Point center, Fl_Color fillColor, bool walkable)
+    : w(w), h(h), center(center), fillColor(fillColor), walkable(walkable) {}
 
 void Cell::draw() {
     fl_draw_box(FL_FLAT_BOX, center.x - w / 2, center.y - h / 2, w, h, fillColor);

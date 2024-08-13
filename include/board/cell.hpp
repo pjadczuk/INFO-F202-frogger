@@ -7,12 +7,13 @@
 class Cell {
 private:
     int w,h;
+    Point center;
     Fl_Color fillColor;
     bool walkable;
-    Point center;
+
 
 public:
-    Cell(Point center, int w, int h, Fl_Color fillColor, bool Walkable);
+    Cell(int w, int h,Point center, Fl_Color fillColor, bool Walkable);
     void draw();
     void setWalkable(bool walkable);
     void setFillColor(Fl_Color fillColor);

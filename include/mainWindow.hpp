@@ -1,15 +1,14 @@
 #pragma once
 #include <FL/Fl_Window.H>
-#include "board/board.hpp"
 #include "game.hpp"
-#include "frog.hpp"
 
 class MainWindow : public Fl_Window {
 private:
-    Game game;
-    bool displayWelcomeScreen; 
+
     int width;
     int height;
+    Game game;
+    bool displayWelcomeScreen; 
     static void welcomeScreenCallback(void* userdata);
     void drawWelcomeScreen();
 public:

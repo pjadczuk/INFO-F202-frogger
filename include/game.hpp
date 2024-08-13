@@ -7,11 +7,11 @@
 
 class Game {
 private:
-    std::unique_ptr<Board> board;
     bool gameRunning;
     bool gameWon;
     int windowWidth;
     int windowHeight;
+    std::unique_ptr<Board> board;
 
 public:
     Game(int windowWidth, int windowHeight);
@@ -24,7 +24,7 @@ public:
     bool isGameWon() const;
     void reset();
     Board* getBoard();
-    
+
     void startNewGame();
     void handleInput(int key);
 };

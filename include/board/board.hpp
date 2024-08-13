@@ -1,27 +1,23 @@
 #pragma once
 #include <vector>
-#include <memory>
 #include "line.hpp"
-#include "../obstacles/car.hpp"
-#include "../obstacles/truck.hpp"
-#include "../obstacles/log.hpp"
-#include "../obstacles/turtle.hpp"
 #include "../frog.hpp"
 #include "../gameState.hpp"
 #include "../texte.hpp"
 
 class Board {
 private:
-    std::vector<Line> lines; // Les lignes du plateau
-    Frog frog;
     int windowWidth;
     int windowHeight;
-    void initialize();
-    void addObstaclesToLines();
+    std::vector<Line> lines; // Les lignes du plateau
+    Frog frog;
     GameState gameState;
     Text scoreText;
     Text livesText;
     Text timeText;
+    void initialize();
+    void addObstaclesToLines();
+
 public:
     Board(int windowWidth, int windowHeight);
     ~Board();

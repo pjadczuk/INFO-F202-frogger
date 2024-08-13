@@ -5,7 +5,6 @@
 Text::Text(const std::string& s, Point center, int windowWidth, int windowHeight, int fontSize, Fl_Color color)
     : s{s}, center{center}, fontSize{fontSize}, color{color}, windowWidth{windowWidth}, windowHeight{windowHeight} {}
 
-// Méthode pour dessiner le texte
 void Text::draw() const {
     fl_color(color);
     fl_font(FL_HELVETICA, fontSize);

@@ -1,5 +1,6 @@
 #include "../../include/board/line.hpp"
-#include <iostream>
+#include <cstddef>
+
 
 
 Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int cellHeight,  int numCells)
@@ -7,7 +8,7 @@ Line::Line(LineType type, int numerLine, Fl_Color cellColor, int cellWidth, int 
     // Créer les cellules de la ligne
     for (int i = 0; i < numCells; ++i) {
         Point center = {cellWidth * i + cellWidth / 2, cellHeight * (14-numerLine) - cellHeight / 2}; // Positionnement des cellules
-        cells.emplace_back(center, cellWidth, cellHeight, cellColor, walkable);
+        cells.emplace_back(cellWidth, cellHeight, center, cellColor, walkable);
     }
 }
 
@@ -30,7 +31,7 @@ void Line::addObstacle(Obstacle* obstacle) {
     }
 }
 
-void Line::switchWalkableCell(int cellIndex) {
+void Line::switchWalkableCell(size_t cellIndex) {
     if (cellIndex >= 0 && cellIndex < cells.size()) {
         cells[cellIndex].setWalkable(true);
     }
@@ -44,7 +45,6 @@ void Line::drawBackground() {
 }
 
 void Line::drawObstacles() const {
-    // Dessiner les obstacles
     for (const auto& obstacle : obstacles) {
         obstacle->draw();
     }

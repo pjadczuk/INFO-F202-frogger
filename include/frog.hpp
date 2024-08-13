@@ -1,8 +1,5 @@
 #pragma once
 #include "shape.hpp"
-#include "obstacles/obstacle.hpp"
-
-class Obstacle; // Déclaration avancée de la classe Obstacle
 
 class Frog : public Shape {
 private:

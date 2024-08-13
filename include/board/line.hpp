@@ -1,4 +1,5 @@
 #pragma once
+#include <cstddef>
 #include <vector>
 #include "cell.hpp"
 #include "../obstacles/obstacle.hpp"
@@ -36,5 +37,5 @@ public:
     int getWidth();
     int getHeight();
     int getNumerLine();
-    void switchWalkableCell(int cellIndex);
+    void switchWalkableCell(size_t cellIndex);
 };

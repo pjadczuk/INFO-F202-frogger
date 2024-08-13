@@ -8,7 +8,7 @@ void GameState::reset(int initialTime, int initialLives) {
     score = 0;
     remainingTime = initialTime;
     lives = initialLives;
-    std::cout <<remainingTime<<" et" << lives<<std::endl;
+    //std::cout <<remainingTime<<" et " << lives<<std::endl;
 }
 
 int GameState::getScore() const {
