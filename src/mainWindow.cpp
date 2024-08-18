@@ -11,7 +11,7 @@ MainWindow::MainWindow(int width, int height, const char* title)
     displayWelcomeScreen(true)
 {
     Fl::add_timeout(1.0 / 60, Timer_CB, this);  // 60 fps
-    Fl::add_timeout(1.0, toggleTurtles_CB, this);  // Appeler toggleTurtles_CB toutes les secondes
+    Fl::add_timeout(1.0, toggleTurtles_CB, this);  // Appel toggleTurtles_CB toutes les secondes
     //Fl::add_timeout(1.0, drawHUD_CB, this); 
     Fl::add_timeout(1.0, welcomeScreenCallback, this);
 }

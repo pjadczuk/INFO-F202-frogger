@@ -9,15 +9,12 @@
 Board::Board(int windowWidth, int windowHeight)
     : windowWidth(windowWidth), windowHeight(windowHeight), 
     frog(Point{windowWidth / 2,  13*windowHeight/14 - ((windowHeight/14)/2)},windowWidth/14 , windowHeight/14, FL_GREEN), 
-    gameState(120,3),
-    scoreText("Score: 0", Point{10, 20}, 16, FL_WHITE),
-    livesText("Lives: 3", Point{10, 40}, 16, FL_WHITE),
-    timeText("Time: 120", Point{10, 60}, 16, FL_WHITE) {
+    gameState(120,3) {
     initialize();
 }
 
 Board::~Board() {
-    std::cout << "Board destructor called" << std::endl;
+    //std::cout << "Board destructor called" << std::endl;
 }
 
 
@@ -122,8 +119,14 @@ Réinitialiser les lignes et les obstacles
 */
 void Board::reseting() {
     gameState.reset(120,3);
+
     initialize();
     frog.resetToInitialCenter();
+}
+
+// du plus grand score
+void Board::resetHightScore() {
+    gameState.resetHighScore();
 }
 
 /*------------------------------------LOGIQUE DU JEU------------------------------------*/
@@ -137,6 +140,7 @@ void Board::update() {
         if (isFrogOnFinishCell()) {
             // Mise à jour si le frog Arrive sur la ligne d'arrivée
             gameState.increaseScore(1);
+            gameState.increasePoints(gameState.getRemainingTime());
             gameState.resetTime();
             frog.resetToInitialCenter();
         }
@@ -166,6 +170,11 @@ void Board::update() {
         gameState.loseLife();
         gameState.resetTime();
         frog.resetToInitialCenter();
+    }
+}
+void Board::save(){
+    if (gameState.getPoints()>gameState.getHighScore()){
+        gameState.saveHighScore();
     }
 }
 
@@ -269,13 +278,16 @@ void Board::drawBackground() {
 void Board::drawHUD() {
     // Dessiner le score
     fl_color(FL_WHITE);
-    fl_draw(("Score: " + std::to_string(gameState.getScore())).c_str(), 10, windowWidth -10);
+    fl_draw(("Score: " + std::to_string(gameState.getPoints())).c_str(), 10, windowWidth -10);
 
     // Dessiner le nombre de vies restantes
     fl_draw(("Lives: " + std::to_string(gameState.getLives())).c_str(), 10, windowWidth - 30);
 
     // Dessiner le temps restant
     fl_draw(("Time: " + std::to_string(gameState.getRemainingTime())).c_str(), 10, windowWidth - 50);
+
+    // Dessiner le meilleur score
+    fl_draw(("Best Score: " + std::to_string(gameState.getHighScore())).c_str(), 710, windowWidth -10);
 }
 
 void Board::drawObstacles() {

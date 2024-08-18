@@ -34,11 +34,15 @@ void Game::draw() {
     } else {
         fl_color(FL_WHITE);
         if (gameWon) {
+            board->save();
             fl_draw("You Win!", windowWidth / 2 - 50, windowHeight / 2);
 			fl_draw("Type 'x' if you want to play again",windowWidth / 2 - 140,windowHeight / 2 + 30);
+            fl_draw("Type 'r' if you want to reset the higest score",windowWidth / 2 - 185,windowHeight / 2 + 60);
         } else {
+            board->save();
             fl_draw("Game Over", windowWidth / 2 - 50, windowHeight / 2);
 			fl_draw("Type 'x' if you want to play again",windowWidth / 2 - 140,windowHeight / 2 + 30);
+            fl_draw("Type 'r' if you want to reset the higest score",windowWidth / 2 - 185,windowHeight / 2 + 60);
         }
     }
 }
@@ -90,6 +94,9 @@ void Game::handleInput(int key) {
 			startNewGame();
 			board->reseting();
 			break;
+        case 'r':
+            board->resetHightScore();
+            break;
         default:
             break;
     }

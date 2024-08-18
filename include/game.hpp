@@ -1,4 +1,3 @@
-// game.hpp
 #pragma once
 
 #include <memory>
@@ -12,6 +11,9 @@ private:
     int windowWidth;
     int windowHeight;
     std::unique_ptr<Board> board;
+    int highScore;
+    void loadHighScore();
+    void saveHighScore();
 
 public:
     Game(int windowWidth, int windowHeight);
@@ -27,5 +29,6 @@ public:
 
     void startNewGame();
     void handleInput(int key);
+    void resetHighScore();
 };
 

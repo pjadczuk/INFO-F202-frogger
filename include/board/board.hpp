@@ -3,7 +3,7 @@
 #include "line.hpp"
 #include "../frog.hpp"
 #include "../gameState.hpp"
-#include "../texte.hpp"
+
 
 class Board {
 private:
@@ -12,9 +12,6 @@ private:
     std::vector<Line> lines; // Les lignes du plateau
     Frog frog;
     GameState gameState;
-    Text scoreText;
-    Text livesText;
-    Text timeText;
     void initialize();
     void addObstaclesToLines();
 
@@ -24,6 +21,8 @@ public:
     
     void update();
     void reseting();
+    void resetHightScore();
+    void save();
 
 
     void moveFrogUp();
